@@ -9,6 +9,7 @@ namespace socketlib {
 
 class UnixSocket : public Socket
 {
+
 private:
     int socket_domain;
     int socket_type;
