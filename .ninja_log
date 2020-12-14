@@ -1,4 +1,0 @@
-# ninja log v5
-0	1225	1607931469560763768	CMakeFiles/LibTests.dir/main.cpp.o	381d43d6f2ab2d67
-1	2032	1607931470368755618	CMakeFiles/LibTests.dir/home/dima/googletest/googlemock/src/gmock-all.cc.o	f73d109fc9c7da1d
-1	3670	1607931472004739120	CMakeFiles/LibTests.dir/home/dima/googletest/googletest/src/gtest-all.cc.o	6ae0604f7dbf49ec
