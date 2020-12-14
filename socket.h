@@ -3,9 +3,9 @@
 
 #include <sys/socket.h>
 #include <unistd.h>
+#include <cstring>
 
 #include <string>
-#include <filesystem>
 
 namespace socketlib  {
 
@@ -13,21 +13,21 @@ class Socket
 {
 
 public:
-    static int unix_domain;
     static int stream_socket;
     static int datagram_socket;
 
     virtual ~Socket() {};
 
+    virtual void makeItServer() = 0;
+
     virtual int domain() = 0;
     virtual int type() = 0;
     virtual int protocol() = 0;
-    virtual std::string fullPath();
-    virtual std::filesystem::path stdFileSystemPath();
+    virtual const std::string fullPath() = 0;
+
 
 };
 
-int Socket::unix_domain = AF_UNIX;
 int Socket::stream_socket = SOCK_STREAM;
 int Socket::datagram_socket = SOCK_DGRAM;
 

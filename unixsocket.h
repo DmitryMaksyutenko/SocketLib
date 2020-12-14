@@ -14,16 +14,20 @@ private:
     int socket_type;
     int socket_protocol;
     int socket_fd;
+    std::string socket_path;
+    sockaddr_un socket_addr;
 
 public:
-    UnixSocket(char *path, int domain, int type, int protocol = 0);
+    UnixSocket(const std::string path, int type, int protocol = 0);
     ~UnixSocket();
+
+    void makeItServer() override;
 
     int domain() override;
     int type() override;
     int protocol() override;
-    std::string fullPath() override;
-    std::filesystem::path stdFileSystemPath() override;
+    const std::string fullPath() override;
+
 
 };
 

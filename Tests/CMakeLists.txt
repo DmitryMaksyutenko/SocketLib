@@ -43,7 +43,7 @@ include_directories(${GTestIncludes}
 
 add_executable(LibTests main.cpp tst_libtests.h
                ${GTestFiles})
-add_test(NAME LibTests COMMAND UnixSocketTest)
-target_link_libraries(LibTests PRIVATE Threads::Threads
-                                        ${PARENT_DIR}/lib/libsocketlib.so)
+add_test(NAME UnixSocketTest COMMAND UnixSocketTest)
+add_test(NAME UnixSocketAsServerTest COMMAND UnixSocketAsServerTest)
+target_link_libraries(LibTests PRIVATE Threads::Threads ${PARENT_DIR}/lib/libsocketlib.so)
 
