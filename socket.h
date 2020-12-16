@@ -13,12 +13,10 @@ class Socket
 {
 
 public:
-    static int stream_socket;
-    static int datagram_socket;
+    static const int stream_socket;
+    static const int datagram_socket;
 
     virtual ~Socket() {};
-
-    virtual void makeItServer() = 0;
 
     virtual int domain() = 0;
     virtual int type() = 0;
@@ -28,8 +26,8 @@ public:
 
 };
 
-int Socket::stream_socket = SOCK_STREAM;
-int Socket::datagram_socket = SOCK_DGRAM;
+const int Socket::stream_socket = SOCK_STREAM;
+const int Socket::datagram_socket = SOCK_DGRAM;
 
 }
 

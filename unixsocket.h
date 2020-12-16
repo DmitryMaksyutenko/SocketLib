@@ -22,13 +22,10 @@ public:
     UnixSocket(const std::string path, int type, int protocol = 0);
     ~UnixSocket();
 
-    void makeItServer() override;
-
     int domain() override;
     int type() override;
     int protocol() override;
     const std::string fullPath() override;
-
 
 };
 
