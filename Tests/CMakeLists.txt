@@ -45,5 +45,8 @@ add_executable(LibTests main.cpp tst_unixsock.h
                ${GTestFiles})
 add_test(NAME UnixStreamSocketTest COMMAND UnixStreamSocketTest)
 add_test(NAME UnixDatagramSocketTest COMMAND UnixDatagramSocketTest)
+add_test(NAME UnixServerSocketTest COMMAND UnixmServerSocketTest)
+add_test(NAME UnixSockeConnectiontTest COMMAND UnixmSocketConnectionTest)
+
 target_link_libraries(LibTests PRIVATE Threads::Threads ${PARENT_DIR}/lib/libsocketlib.so)
 
