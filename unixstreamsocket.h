@@ -1,13 +1,12 @@
 #ifndef UNIXSOCKET_H
 #define UNIXSOCKET_H
 
-#include <sys/un.h>
 
 #include "socket.h"
 
 namespace socketlib {
 
-class UnixSocket : public Socket
+class UnixStreamSocket : public Socket
 {
 
 private:
@@ -19,14 +18,15 @@ private:
     sockaddr_un socket_addr;
 
 public:
-    UnixSocket(const std::string path, int type, int protocol = 0);
-    ~UnixSocket();
+    UnixStreamSocket(const std::string path, int protocol = 0);
+    ~UnixStreamSocket();
 
     int domain() override;
     int type() override;
     int protocol() override;
     const std::string fullPath() override;
 
+    int connectTo();
 };
 
 }
