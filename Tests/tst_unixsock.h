@@ -14,16 +14,17 @@ using namespace testing;
 namespace fs = std::filesystem;
 
 const std::string un_soc_1 = "/Sockets/un_soc_1";
+const char *test_data = "Some test data";
 
 
 TEST(UnixSocket, UnixStreamSocketTest)
 {
-    socketlib::UnixStreamSocket soc(un_soc_1);
+    socketlib::UnixStreamSocket soc;
     ASSERT_EQ(AF_UNIX, soc.domain());
     ASSERT_EQ(socketlib::UnixStreamSocket::stream_socket, soc.type());
     ASSERT_EQ(0, soc.protocol());
-    ASSERT_EQ(un_soc_1, soc.fullPath());
-    ASSERT_EQ(-1, soc.connectTo());
+    ASSERT_EQ("", soc.fullPath());
+    ASSERT_EQ(-1, soc.connectTo(un_soc_1));
 }
 
 TEST(UnixSocket, UnixDatagramSocketTest)
@@ -49,10 +50,25 @@ TEST(UnixSocket, UnixStreamServerSocketTest)
 
 TEST(UnixSocket, UnixSocketConnectionTest)
 {
-    socketlib::UnixServerStreamSocket server(un_soc_1, 1);
-    socketlib::UnixStreamSocket client(un_soc_1);
+    socketlib::UnixServerStreamSocket server(un_soc_1, 0);
+    socketlib::UnixStreamSocket client;
 
-    ASSERT_EQ(0, client.connectTo());
+    ASSERT_EQ(0, client.connectTo(un_soc_1));
+    ASSERT_EQ(typeid(server.acceptConnection()).name(),
+              typeid(client).name());
+}
+
+TEST(UnixSocket, UnixSocketDataSending)
+{
+    socketlib::UnixServerStreamSocket server(un_soc_1, 0);
+    socketlib::UnixStreamSocket client;
+
+    client.connectTo(un_soc_1);
+    socketlib::UnixStreamSocket sock = server.acceptConnection();
+    client.sendData(test_data);
+    char *data = sock.readBuffer();
+
+    ASSERT_EQ(*data, *test_data);
 }
 
 #endif // TST_LIBTESTS_H

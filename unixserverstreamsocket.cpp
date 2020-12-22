@@ -37,3 +37,11 @@ const std::string socketlib::UnixServerStreamSocket::fullPath()
 {
     return socket_path;
 }
+
+socketlib::UnixStreamSocket socketlib::UnixServerStreamSocket::acceptConnection()
+{
+    int clientFd = accept(socket_fd, 0, 0);
+
+    UnixStreamSocket peerSoc(clientFd);
+    return peerSoc;
+}

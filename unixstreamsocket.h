@@ -17,8 +17,12 @@ private:
     std::string socket_path;
     sockaddr_un socket_addr;
 
+    // test field.
+    char buffer[20];
+
 public:
-    UnixStreamSocket(const std::string path, int protocol = 0);
+    UnixStreamSocket(int fd = -1,
+                     int protocol = 0);
     ~UnixStreamSocket();
 
     int domain() override;
@@ -26,7 +30,10 @@ public:
     int protocol() override;
     const std::string fullPath() override;
 
-    int connectTo();
+    int connectTo(std::string path);
+    void sendData(const char *data);
+    char* readBuffer();
+
 };
 
 }

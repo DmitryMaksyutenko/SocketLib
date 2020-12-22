@@ -2,6 +2,7 @@
 #define UNIXSERVERSTREAMSOCKET_H
 
 #include "socket.h"
+#include "unixstreamsocket.h"
 
 namespace socketlib {
 
@@ -23,6 +24,8 @@ public:
     int type() override;
     int protocol() override;
     const std::string fullPath() override;
+
+    UnixStreamSocket acceptConnection();
 };
 
 }
