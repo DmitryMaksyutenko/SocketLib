@@ -12,17 +12,30 @@ namespace socketlib  {
 
 class Socket
 {
+protected:
+    int socket_domain;
+    int socket_type;
+    int socket_protocol;
+    int socket_fd;
+    std::string socket_path;
+    sockaddr_un socket_addr;
 
 public:
-    static const int stream_socket;
-    static const int datagram_socket;
 
-    virtual ~Socket() {};
+    Socket(int domain,
+           int type,
+           int protocol = 0,
+           int fd = -1,
+           const char *path = "");
+    virtual ~Socket();
 
-    virtual int domain() = 0;
-    virtual int type() = 0;
-    virtual int protocol() = 0;
-    virtual const std::string fullPath() = 0;
+    virtual int domain();
+    virtual int type();
+    virtual int protocol();
+    virtual const std::string fullPath();
+
+private:
+    void constructSocketAddr(int fd);
 
 };
 

@@ -1,4 +1,49 @@
 #include "socket.h"
 
-const int socketlib::Socket::stream_socket = SOCK_STREAM;
-const int socketlib::Socket::datagram_socket = SOCK_DGRAM;
+socketlib::Socket::Socket(int domain,
+                          int type,
+                          int protocol,
+                          int fd,
+                          const char *path)
+    : socket_domain(domain),
+      socket_type(type),
+      socket_protocol(protocol),
+      socket_path(path)
+{
+    constructSocketAddr(fd);
+}
+
+void socketlib::Socket::constructSocketAddr(int fd)
+{
+    socket_addr.sun_family = socket_domain;
+    if (fd >= 0) {
+        socket_fd = fd;
+    }else{
+        socket_fd = socket(socket_domain, socket_type, socket_protocol);
+    }
+}
+
+socketlib::Socket::~Socket()
+{
+   close(socket_fd);
+}
+
+int socketlib::Socket::domain()
+{
+    return socket_domain;
+}
+
+int socketlib::Socket::type()
+{
+    return socket_type;
+}
+
+int socketlib::Socket::protocol()
+{
+    return socket_protocol;
+}
+
+const std::string socketlib::Socket::fullPath()
+{
+    return socket_path;
+}
