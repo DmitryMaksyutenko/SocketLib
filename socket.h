@@ -32,7 +32,14 @@ public:
     virtual int domain();
     virtual int type();
     virtual int protocol();
+    virtual int socketDesctiptor();
+    virtual sockaddr_un socketAddres() const;
     virtual const std::string fullPath();
+
+    friend bool operator==(const Socket &lhs, const Socket &rhs)
+    {
+        return lhs.socket_fd == rhs.socket_fd;
+    }
 
 private:
     void constructSocketAddr(int fd);

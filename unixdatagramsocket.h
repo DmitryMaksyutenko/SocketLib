@@ -8,14 +8,16 @@ namespace socketlib {
 
 class UnixDatagramSocket : public Socket
 {
+    char buffer[20];
 
 public:
-    UnixDatagramSocket(int protocol = 0,
+    UnixDatagramSocket(std::string path,
+                       int protocol = 0,
                        int fd = -1);
     ~UnixDatagramSocket();
 
-    int connectTo(std::string path);
-
+    size_t receiveFrom(const Socket &source);
+    size_t sendTo(const Socket &dest);
 };
 
 }

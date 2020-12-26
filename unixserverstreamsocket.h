@@ -11,7 +11,7 @@ class UnixServerStreamSocket : public Socket
 
 public:
     UnixServerStreamSocket(const std::string path,
-                           int maxConnections,
+                           int maxConnections = 0,
                            int protocol = 0);
     ~UnixServerStreamSocket();
 

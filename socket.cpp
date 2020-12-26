@@ -43,6 +43,16 @@ int socketlib::Socket::protocol()
     return socket_protocol;
 }
 
+int socketlib::Socket::socketDesctiptor()
+{
+    return socket_fd;
+}
+
+sockaddr_un socketlib::Socket::socketAddres() const
+{
+    return socket_addr;
+}
+
 const std::string socketlib::Socket::fullPath()
 {
     return socket_path;
