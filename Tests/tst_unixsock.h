@@ -7,9 +7,9 @@
 #include <gmock/gmock-matchers.h>
 #include <gmock/gmock.h>
 
-#include "unixstreamsocket.h"
-#include "unixdatagramsocket.h"
-#include "unixserverstreamsocket.h"
+#include "Unix/unixstreamsocket.h"
+#include "Unix/unixdatagramsocket.h"
+#include "Unix/unixserverstreamsocket.h"
 
 using namespace testing;
 namespace fs = std::filesystem;
@@ -22,8 +22,8 @@ class DatagramSocketMock : public socketlib::UnixDatagramSocket
 {
 public:
     DatagramSocketMock(std::string path) : socketlib::UnixDatagramSocket(path){};
-    MOCK_METHOD(size_t, receiveFrom, (const Socket &source));
-    MOCK_METHOD(size_t, sendTo, (const Socket &source));
+    MOCK_METHOD(size_t, receiveFrom, ());
+    MOCK_METHOD(size_t, sendTo, (const Socket &source, const char * data));
 };
 
 
@@ -90,18 +90,16 @@ TEST(UnixSocket, UnixSocketDatagramSendingTest)
 {
     std::string path_1 = "/Sockets/soc_1";
     std::string path_2 = "/Sockets/soc_2";
-//    size_t received = 0;
-//    size_t sended = 0;
 
     DatagramSocketMock mockSocetRcv(path_1);
     DatagramSocketMock mockSocetSend(path_2);
 
-    EXPECT_CALL(mockSocetSend, sendTo(mockSocetRcv))
+    EXPECT_CALL(mockSocetSend, sendTo(mockSocetRcv, test_data))
             .Times(AtLeast(1));
-    EXPECT_CALL(mockSocetRcv, receiveFrom(mockSocetSend))
+    EXPECT_CALL(mockSocetRcv, receiveFrom())
             .Times(AtLeast(1));
-    mockSocetRcv.receiveFrom(mockSocetSend);
-    mockSocetSend.sendTo(mockSocetRcv);
+    mockSocetRcv.receiveFrom();
+    mockSocetSend.sendTo(mockSocetRcv, test_data);
 
 }
 

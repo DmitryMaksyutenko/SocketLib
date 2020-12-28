@@ -7,6 +7,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(${PROJECT_NAME} SHARED socket.cpp
-                                    unixstreamsocket.cpp
-                                    unixdatagramsocket.cpp
-                                    unixserverstreamsocket.cpp)
+                                    Unix/unixstreamsocket.cpp
+                                    Unix/unixdatagramsocket.cpp
+                                    Unix/unixserverstreamsocket.cpp)

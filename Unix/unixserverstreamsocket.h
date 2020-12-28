@@ -1,7 +1,7 @@
 #ifndef UNIXSERVERSTREAMSOCKET_H
 #define UNIXSERVERSTREAMSOCKET_H
 
-#include "socket.h"
+#include "../socket.h"
 #include "unixstreamsocket.h"
 
 namespace socketlib {

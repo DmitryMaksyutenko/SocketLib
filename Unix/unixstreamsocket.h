@@ -2,7 +2,7 @@
 #define UNIXSOCKET_H
 
 
-#include "socket.h"
+#include "../socket.h"
 
 namespace socketlib {
 
