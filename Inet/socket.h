@@ -3,6 +3,7 @@
 
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <arpa/inet.h>
 #include <unistd.h>
 #include <cstring>
 
@@ -18,7 +19,7 @@ protected:
     int socket_protocol;
     int socket_fd;
     std::string socket_path;
-    sockaddr_un socket_addr;
+    sockaddr_storage socket_addr;
 
 public:
 
@@ -33,7 +34,7 @@ public:
     virtual int type();
     virtual int protocol();
     virtual int socketDesctiptor();
-    virtual sockaddr_un socketAddres() const;
+    virtual sockaddr_storage socketAddres() const;
     virtual const std::string fullPath();
 
     friend bool operator==(const Socket &lhs, const Socket &rhs)
@@ -42,7 +43,7 @@ public:
     }
 
 private:
-    void constructSocketAddr(int fd);
+    void constructSocket(int fd);
 
 };
 

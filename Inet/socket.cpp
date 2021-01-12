@@ -10,12 +10,12 @@ socketlib::Socket::Socket(int domain,
       socket_protocol(protocol),
       socket_path(path)
 {
-    constructSocketAddr(fd);
+    constructSocket(fd);
 }
 
-void socketlib::Socket::constructSocketAddr(int fd)
+void socketlib::Socket::constructSocket(int fd)
 {
-    socket_addr.sun_family = socket_domain;
+    socket_addr.ss_family = socket_domain;
     if (fd >= 0) {
         socket_fd = fd;
     }else{
@@ -48,7 +48,7 @@ int socketlib::Socket::socketDesctiptor()
     return socket_fd;
 }
 
-sockaddr_un socketlib::Socket::socketAddres() const
+sockaddr_storage socketlib::Socket::socketAddres() const
 {
     return socket_addr;
 }
