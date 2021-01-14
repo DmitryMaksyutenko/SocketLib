@@ -18,13 +18,6 @@ const std::string un_str_soc = "/Sockets/un_str_soc";
 const std::string un_dgr_soc = "/Sockets/un_dgr_soc";
 const char *test_data = "Some data\n";
 
-class DatagramSocketMock : public socketlib::UnixDatagramSocket
-{
-public:
-    DatagramSocketMock(std::string path) : socketlib::UnixDatagramSocket(path){};
-    MOCK_METHOD(size_t, receiveFrom, ());
-    MOCK_METHOD(size_t, sendTo, (const Socket &source, const char * data));
-};
 
 
 TEST(UnixSocket, UnixStreamSocketTest)
@@ -84,23 +77,6 @@ TEST(UnixSocket, UnixSocketDataSending)
     const char *data = clientReceiver.readBuffer();
 
     ASSERT_STREQ(data, test_data);
-}
-
-TEST(UnixSocket, UnixSocketDatagramSendingTest)
-{
-    std::string path_1 = "/Sockets/soc_1";
-    std::string path_2 = "/Sockets/soc_2";
-
-    DatagramSocketMock mockSocetRcv(path_1);
-    DatagramSocketMock mockSocetSend(path_2);
-
-    EXPECT_CALL(mockSocetSend, sendTo(mockSocetRcv, test_data))
-            .Times(AtLeast(1));
-    EXPECT_CALL(mockSocetRcv, receiveFrom())
-            .Times(AtLeast(1));
-    mockSocetRcv.receiveFrom();
-    mockSocetSend.sendTo(mockSocetRcv, test_data);
-
 }
 
 #endif // TST_LIBTESTS_H

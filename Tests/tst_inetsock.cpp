@@ -2,6 +2,7 @@
 #define TST_INETSOCK_H
 
 #include <filesystem>
+#include <iostream>
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
@@ -12,11 +13,13 @@
 using namespace testing;
 namespace fs = std::filesystem;
 
-std::string test_url = "127.0.0.1";
+std::string test_addr = "127.0.0.1";
+std::string server_port = "60999";
 
 TEST(InetSocket, InetDatagramSocket)
 {
-    socketlib::InetDatagramSocet soc(test_url);
+    socketlib::InetDatagramSocet soc(test_addr, server_port);
+    ASSERT_TRUE(fs::is_socket(soc.fullPath()));
 }
 
 #endif // TST_INETSOCK_H

@@ -1,18 +1,20 @@
 #ifndef INETDATAGRAMSOCET_H
 #define INETDATAGRAMSOCET_H
 
-#include "socket.h"
+#include "socketinet.h"
 
 namespace socketlib {
 
 
-class InetDatagramSocet : public Socket
+class InetDatagramSocet : public SocketInet
 {
 public:
-    InetDatagramSocet(std::string path,
+    InetDatagramSocet(std::string addr,
+                      std::string port,
                       int protocol = 0,
                       int fd = -1);
     ~InetDatagramSocet();
+
 };
 
 }

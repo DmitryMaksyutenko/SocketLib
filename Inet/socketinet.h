@@ -3,47 +3,48 @@
 
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <arpa/inet.h>
 #include <unistd.h>
-#include <cstring>
+#include <netdb.h>
 
+#include <cstring>
 #include <string>
 
 namespace socketlib  {
 
-class Socket
+class SocketInet
 {
 protected:
     int socket_domain;
     int socket_type;
     int socket_protocol;
     int socket_fd;
-    std::string socket_path;
-    sockaddr_storage socket_addr;
+    addrinfo socket_addr;
+    std::string socket_host;
+    std::string socket_port;
 
 public:
 
-    Socket(int domain,
-           int type,
-           int protocol = 0,
-           int fd = -1,
-           const char *path = "");
-    virtual ~Socket();
+    SocketInet(std::string host,
+               std::string port,
+               int type,
+               int protocol = 0,
+               int fd = -1);
+    virtual ~SocketInet();
 
     virtual int domain();
     virtual int type();
     virtual int protocol();
     virtual int socketDesctiptor();
-    virtual sockaddr_storage socketAddres() const;
-    virtual const std::string fullPath();
+    virtual std::string fullPath();
 
-    friend bool operator==(const Socket &lhs, const Socket &rhs)
+    friend bool operator==(const SocketInet &lhs, const SocketInet &rhs)
     {
         return lhs.socket_fd == rhs.socket_fd;
     }
 
 private:
     void constructSocket(int fd);
+    void findAddresLoop();
 
 };
 
