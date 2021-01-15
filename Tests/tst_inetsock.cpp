@@ -20,6 +20,7 @@ TEST(InetSocket, InetDatagramSocket)
 {
     socketlib::InetDatagramSocet soc(test_addr, server_port);
     ASSERT_TRUE(fs::is_socket(soc.fullPath()));
+    ASSERT_EQ(test_addr, soc.address());
 }
 
 #endif // TST_INETSOCK_H

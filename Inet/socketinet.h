@@ -3,6 +3,7 @@
 
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <arpa/inet.h>
 #include <unistd.h>
 #include <netdb.h>
 
@@ -36,6 +37,7 @@ public:
     virtual int protocol();
     virtual int socketDesctiptor();
     virtual std::string fullPath();
+    virtual std::string address();
 
     friend bool operator==(const SocketInet &lhs, const SocketInet &rhs)
     {

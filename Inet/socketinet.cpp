@@ -42,13 +42,15 @@ void socketlib::SocketInet::findAddresLoop()
             continue;
         }
         if (bind(socket_fd, rp->ai_addr, rp->ai_addrlen) == 0) {
+            socket_addr.ai_addr = rp->ai_addr;
+            socket_addr.ai_addrlen = rp->ai_addrlen;
             break;
         }
 
         close(socket_fd);
     }
 
-    freeaddrinfo(result); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+    freeaddrinfo(result);
 }
 
 socketlib::SocketInet::~SocketInet()
@@ -83,4 +85,10 @@ std::string socketlib::SocketInet::fullPath()
     std::string fullPath = "/proc/" + std::to_string(pid) +
                             "/fd/" + std::to_string(socket_fd);
     return fullPath;
+}
+
+std::string socketlib::SocketInet::address()
+{
+    sockaddr_in *addr = (sockaddr_in *)socket_addr.ai_addr;
+    return inet_ntoa((in_addr) addr->sin_addr);
 }
