@@ -1,8 +1,4 @@
-#ifndef TST_INETSOCK_H
-#define TST_INETSOCK_H
-
 #include <filesystem>
-#include <iostream>
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
@@ -18,9 +14,8 @@ std::string server_port = "60999";
 
 TEST(InetSocket, InetDatagramSocket)
 {
+    std::string data = "some";
     socketlib::InetDatagramSocet soc(test_addr, server_port);
     ASSERT_TRUE(fs::is_socket(soc.fullPath()));
     ASSERT_EQ(test_addr, soc.address());
 }
-
-#endif // TST_INETSOCK_H

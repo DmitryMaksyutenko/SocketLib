@@ -2,6 +2,7 @@
 #define INETDATAGRAMSOCET_H
 
 #include "socketinet.h"
+#include "../databuffer.h"
 
 namespace socketlib {
 
@@ -10,8 +11,7 @@ class InetDatagramSocet : public SocketInet
 {
 private:
     addrinfo peer_soc;
-    char inBuffer[1024];
-    char outBuffer[1024];
+    DataBuffer buffer;
 
 public:
     InetDatagramSocet(std::string addr,

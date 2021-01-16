@@ -11,4 +11,5 @@ add_library(${PROJECT_NAME} SHARED Unix/socket.cpp
                                     Unix/unixdatagramsocket.cpp
                                     Unix/unixserverstreamsocket.cpp
                                     Inet/socketinet.cpp
-                                    Inet/inetdatagramsocet.cpp)
+                                    Inet/inetdatagramsocet.cpp
+                                    databuffer.cpp)

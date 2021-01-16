@@ -44,6 +44,7 @@ include_directories(${GTestIncludes}
 add_executable(LibTests main.cpp
                tst_unixsock.h
                tst_inetsock.cpp
+               tst_data_buffer.cpp
                ${GTestFiles})
 
 add_test(NAME UnixStreamSocketTest COMMAND UnixStreamSocketTest)
@@ -53,6 +54,8 @@ add_test(NAME UnixSocketStreamConnectionTest COMMAND UnixSocketStreamConnectionT
 add_test(NAME UnixSocketDatagramSendingTest COMMAND UnixSocketDatagramSendingTest)
 
 add_test(NAME InetDatagramSocket COMMAND InetDatagramSocket)
+
+add_test(NAME DataBufferTest COMMAND DataBufferTest)
 
 target_link_libraries(LibTests PRIVATE Threads::Threads ${PARENT_DIR}/lib/libsocketlib.so)
 

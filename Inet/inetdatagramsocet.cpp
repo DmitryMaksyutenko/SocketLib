@@ -19,7 +19,7 @@ size_t socketlib::InetDatagramSocet::receiveData()
 {
     sockaddr_un addr;
     socklen_t len = sizeof (addr);
-    size_t size = recvfrom(socket_fd, inBuffer, 1024, 0,
+    size_t size = recvfrom(socket_fd, buffer.readBuffer(), buffer.readBufferSize(), 0,
                            (sockaddr *)&addr, &len);
     return size;
 }
@@ -28,7 +28,8 @@ size_t socketlib::InetDatagramSocet::sendTo(const char *host, const char *port, 
 {
     addrinfo *addr = constructAddres(host, port);
     socklen_t len = sizeof (addr);
-    size_t size = sendto(socket_fd, data, strlen(data), 0,
+    buffer.appendWrite(data);
+    size_t size = sendto(socket_fd, buffer.writeBuffer(), buffer.writeBufferSize(), 0,
                          (sockaddr *)addr, len);
 //    freeaddrinfo(addr);
     return size;
