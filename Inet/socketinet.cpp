@@ -24,7 +24,7 @@ void socketlib::SocketInet::constructSocket(int fd)
         socket_addr.ai_flags = AI_PASSIVE;
         socket_addr.ai_protocol = socket_protocol;
         socket_addr.ai_canonname = NULL;
-        socket_addr.ai_addr = NULL;
+        socket_addr.ai_addr = new sockaddr;
         socket_addr.ai_next = NULL;
         findAddresLoop();
     }
@@ -32,9 +32,11 @@ void socketlib::SocketInet::constructSocket(int fd)
 
 void socketlib::SocketInet::findAddresLoop()
 {
-
-    addrinfo * result, *rp;
-    getaddrinfo(socket_host.c_str(), socket_port.c_str(), &socket_addr, &result);
+    addrinfo *result, *rp;
+    getaddrinfo(socket_host.c_str(),
+                socket_port.c_str(),
+                &socket_addr,
+                &result);
 
     for (rp = result; rp != NULL; rp = rp->ai_next) {
         socket_fd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
@@ -42,8 +44,7 @@ void socketlib::SocketInet::findAddresLoop()
             continue;
         }
         if (bind(socket_fd, rp->ai_addr, rp->ai_addrlen) == 0) {
-            socket_addr.ai_addr = rp->ai_addr;
-            socket_addr.ai_addrlen = rp->ai_addrlen;
+            memcpy(socket_addr.ai_addr, rp->ai_addr, sizeof (sockaddr));
             break;
         }
 
@@ -56,6 +57,7 @@ void socketlib::SocketInet::findAddresLoop()
 socketlib::SocketInet::~SocketInet()
 {
    close(socket_fd);
+   delete socket_addr.ai_addr;
 
 }
 

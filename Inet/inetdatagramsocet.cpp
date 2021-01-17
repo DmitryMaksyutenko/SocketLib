@@ -31,7 +31,7 @@ size_t socketlib::InetDatagramSocet::sendTo(const char *host, const char *port, 
     buffer.appendWrite(data);
     size_t size = sendto(socket_fd, buffer.writeBuffer(), buffer.writeBufferSize(), 0,
                          (sockaddr *)addr, len);
-//    freeaddrinfo(addr);
+    freeaddrinfo(addr);
     return size;
 }
 
